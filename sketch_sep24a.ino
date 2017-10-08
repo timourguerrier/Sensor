@@ -2,36 +2,33 @@
 int ThermPin = 0;
 int Vo;
 float R1 = 10000;
-float b = 3435;
-float t0 = 273.15;
-float adc = 0;
-float logR,T,R,Tc,Tf,Rth;
+float refT = 32.00;
+float c1 = 1.009249522e-03, c2 = 2.378405444e-04, c3 = 2.019202697e-07;
+float logR2,R2,T,Tc,Tf;
+
 void setup(){
   Serial.begin(9600);
 }
-float Calcul(float adc)
-{
-  Vo = analogRead(ThermPin);
-  R = (1024/adc - 1);
-  logR = log(R);
-  T= 1.0/ (1/(Vo+t0) + 1/b * logR);
-  Tc = T - 273.15;
-  //Tf = (Tc * 9.0)/ 5.0 + 32.0; 
-  Rth = exp(b * (1/T - 1/(Vo+t0)));
-  
-  return Rth;
- }
-void loop()
-{
-  while(adc<1025)
-  {
-  Serial.print("Temperature: ");   
+void printOut(float Tf, float Tc) {
+  Serial.print("Temperature: ");
+  Serial.print(Tf);
+  Serial.print(" F; ");
   Serial.print(Tc);
-  Serial.println(" C"); 
-  Serial.print(Calcul(adc));
-  Serial.print("K Rt; "); 
+  Serial.println(" C");
+}
+
+void loop() {
+  
+  Vo = analogRead(ThermPin);
+  
+  R2=R1 * (1023.0 / (float)Vo - 1.0);
+  logR2 = log(R2);
+  T = (1.0 / (c1 + c2*logR2 + c3*logR2*logR2*logR2));
+  Tc = T - 273.15;
+  Tf = ( Tc * 9.0)/ 5.0 + 32.0;
+  
+  printOut(Tf, Tc);
   delay(1000);
-  adc++;
-  }
+  
 }
 
