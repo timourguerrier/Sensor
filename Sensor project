@@ -1,9 +1,9 @@
 my idea is having a room lighting on by detecting presence of someone coming in the room and when it's getting dark.
-With the help of light sensor and ultrason sensor.
+With the help of light sensor and infrarouge sensor.
 When someone come in the room on day light, nothing happened but when the room is dark and someone coming in the room is lighting on.
 We could also  may be, chose the light intensity or put on/off the light on an interface.
 
 material used for this project:
 
-light sensor, led, 
+light sensor,PIR sensor, led, arduino, pc. 
 
