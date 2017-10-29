@@ -1,0 +1,30 @@
+ 
+#define NIGHT 400
+#define DAY 650
+
+int light = 0;       // LED qui s'allume si détection
+int movement = 0; // capteur infrarouge PIR
+int ledPin = 11;
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+
+  light = analogRead(A0);
+  Serial.print("light -> ");
+  Serial.print(light);
+  
+  movement = digitalRead(6);
+  Serial.print(" movement -> ");
+  Serial.println(movement);
+
+  if (light< DAY && movement==1) {
+  digitalWrite(ledPin, HIGH);
+}
+else {
+  digitalWrite(ledPin, LOW);
+}
+}
